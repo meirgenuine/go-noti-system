@@ -19,3 +19,48 @@
 
 # Go workspace file
 go.work
+
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+*.o
+*.a
+*.s
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.lib
+*.dll
+*.dylib
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+*.ipa
+*.apk
+
+# gRPC generated files
+*_pb.go
+
+# Android binaries
+*.apk
+*.aar
+
+# iOS binaries
+*.app
+*.framework
+
+# Temporary directories for gomobile builds
+build/
