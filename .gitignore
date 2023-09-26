@@ -17,9 +17,6 @@
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
-# Go workspace file
-go.work
-
 # Compiled Object files, Static and Dynamic libs (Shared Objects)
 *.o
 *.a
@@ -34,10 +31,6 @@ go.work
 *.dll
 *.dylib
 
-# Fortran module files
-*.mod
-*.smod
-
 # Compiled Static libraries
 *.lai
 *.la
@@ -50,9 +43,6 @@ go.work
 *.app
 *.ipa
 *.apk
-
-# gRPC generated files
-*_pb.go
 
 # Android binaries
 *.apk

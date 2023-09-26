@@ -1,0 +1,16 @@
+syntax = "proto3";
+package mygrpcservice;
+
+option go_package = "./server";
+
+service NotiService {
+  rpc GetNoti (NotiRequest) returns (NotiReply) {}
+}
+
+message NotiRequest {
+  string notification = 1;
+}
+
+message NotiReply {
+  string message = 1;
+}
