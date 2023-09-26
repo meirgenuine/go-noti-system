@@ -1,16 +1,14 @@
 syntax = "proto3";
 package mygrpcservice;
 
+import "google/protobuf/empty.proto";
+
 option go_package = "./server";
 
 service NotiService {
-  rpc GetNoti (NotiRequest) returns (NotiReply) {}
+  rpc GetNoti (Noti) returns (google.protobuf.Empty) {}
 }
 
-message NotiRequest {
+message Noti {
   string notification = 1;
-}
-
-message NotiReply {
-  string message = 1;
 }

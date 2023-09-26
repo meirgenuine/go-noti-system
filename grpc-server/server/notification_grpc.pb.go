@@ -11,6 +11,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -26,7 +27,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type NotiServiceClient interface {
-	GetNoti(ctx context.Context, in *NotiRequest, opts ...grpc.CallOption) (*NotiReply, error)
+	GetNoti(ctx context.Context, in *Noti, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type notiServiceClient struct {
@@ -37,8 +38,8 @@ func NewNotiServiceClient(cc grpc.ClientConnInterface) NotiServiceClient {
 	return &notiServiceClient{cc}
 }
 
-func (c *notiServiceClient) GetNoti(ctx context.Context, in *NotiRequest, opts ...grpc.CallOption) (*NotiReply, error) {
-	out := new(NotiReply)
+func (c *notiServiceClient) GetNoti(ctx context.Context, in *Noti, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, NotiService_GetNoti_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -50,7 +51,7 @@ func (c *notiServiceClient) GetNoti(ctx context.Context, in *NotiRequest, opts .
 // All implementations must embed UnimplementedNotiServiceServer
 // for forward compatibility
 type NotiServiceServer interface {
-	GetNoti(context.Context, *NotiRequest) (*NotiReply, error)
+	GetNoti(context.Context, *Noti) (*emptypb.Empty, error)
 	mustEmbedUnimplementedNotiServiceServer()
 }
 
@@ -58,7 +59,7 @@ type NotiServiceServer interface {
 type UnimplementedNotiServiceServer struct {
 }
 
-func (UnimplementedNotiServiceServer) GetNoti(context.Context, *NotiRequest) (*NotiReply, error) {
+func (UnimplementedNotiServiceServer) GetNoti(context.Context, *Noti) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetNoti not implemented")
 }
 func (UnimplementedNotiServiceServer) mustEmbedUnimplementedNotiServiceServer() {}
@@ -75,7 +76,7 @@ func RegisterNotiServiceServer(s grpc.ServiceRegistrar, srv NotiServiceServer) {
 }
 
 func _NotiService_GetNoti_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(NotiRequest)
+	in := new(Noti)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -87,7 +88,7 @@ func _NotiService_GetNoti_Handler(srv interface{}, ctx context.Context, dec func
 		FullMethod: NotiService_GetNoti_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NotiServiceServer).GetNoti(ctx, req.(*NotiRequest))
+		return srv.(NotiServiceServer).GetNoti(ctx, req.(*Noti))
 	}
 	return interceptor(ctx, in, info, handler)
 }

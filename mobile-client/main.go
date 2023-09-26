@@ -6,7 +6,7 @@ import (
 	"net/url"
 	"time"
 
-	pb "github.com/meirgenuine/go-noti-system/grpc-server/grpc-server/server"
+	pb "github.com/meirgenuine/go-noti-system/grpc-server/server"
 
 	"github.com/gorilla/websocket"
 	"google.golang.org/grpc"
@@ -41,7 +41,7 @@ func main() {
 		// Send the message to gRPC server
 		ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 		defer cancel()
-		_, err = grpcClient.GetNoti(ctx, &pb.NotiRequest{Notification: string(message)})
+		_, err = grpcClient.GetNoti(ctx, &pb.Noti{Notification: string(message)})
 		if err != nil {
 			log.Fatalf("Could not send notification to gRPC server: %v", err)
 		}
