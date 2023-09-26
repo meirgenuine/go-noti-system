@@ -38,6 +38,8 @@ func main() {
 			return
 		}
 
+		log.Printf("Received notification: %s", message)
+
 		go func(msg []byte) {
 			ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 			defer cancel()
@@ -48,7 +50,7 @@ func main() {
 				return
 			}
 
-			log.Printf("Sent notification to gRPC server: %s", msg)
+			log.Printf("Sent notification to gRPC server")
 		}(message)
 	}
 }
