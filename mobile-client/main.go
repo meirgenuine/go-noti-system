@@ -6,9 +6,8 @@ import (
 	"net/url"
 	"time"
 
-	pb "github.com/meirgenuine/go-noti-system/grpc-server/server"
-
 	"github.com/gorilla/websocket"
+	pb "github.com/meirgenuine/go-noti-system/grpc-server/server"
 	"google.golang.org/grpc"
 )
 
@@ -17,6 +16,7 @@ func main() {
 	conn, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Failed to connect to gRPC server: %v", err)
+		return
 	}
 	defer conn.Close()
 
@@ -27,6 +27,7 @@ func main() {
 	c, _, err := websocket.DefaultDialer.Dial(u.String(), nil)
 	if err != nil {
 		log.Fatalf("WebSocket dial error: %v", err)
+		return
 	}
 	defer c.Close()
 
@@ -34,16 +35,20 @@ func main() {
 		_, message, err := c.ReadMessage()
 		if err != nil {
 			log.Printf("WebSocket read error: %v", err)
-			break
+			return
 		}
-		log.Printf("Received notification: %s", message)
 
-		// Send the message to gRPC server
-		ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-		defer cancel()
-		_, err = grpcClient.GetNoti(ctx, &pb.Noti{Notification: string(message)})
-		if err != nil {
-			log.Fatalf("Could not send notification to gRPC server: %v", err)
-		}
+		go func(msg []byte) {
+			ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+			defer cancel()
+
+			_, err = grpcClient.GetNoti(ctx, &pb.Noti{Notification: string(msg)})
+			if err != nil {
+				log.Printf("Could not send notification to gRPC server: %v", err)
+				return
+			}
+
+			log.Printf("Sent notification to gRPC server: %s", msg)
+		}(message)
 	}
 }
